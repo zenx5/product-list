@@ -1,7 +1,7 @@
 import BarNav from "./BarNav";
-import BreadCrumbs from "BreadCrumbs"
+import CustomBreadcrumbs from "./CustomBreadcrumbs"
 
 export {
     BarNav,
-    BreadCrumbs
+    CustomBreadcrumbs
 }
