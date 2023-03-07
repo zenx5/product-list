@@ -10,7 +10,7 @@ const pt = {
     stock:'Estoque',
     active:'Ativo',
     deactive:'Desativo',
-    option:'Opções',
+    options:'Opções',
     edit: 'Editar',
     delete: 'Excluir'
 

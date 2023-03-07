@@ -7,6 +7,7 @@ import {
     TableContainer,
     TableHead,
     TableRow,
+    useMediaQuery,
 } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -48,11 +49,25 @@ export default function Index(){
         { href:'/', label:'Productos' },
     ]
 
+    // const breackpoint1900 = useMediaQuery('(min-width:1900px)')
+    // const breackpoint1200 = useMediaQuery('(min-width:1200px)')
+    // const breackpoint769 = useMediaQuery('(min-width:769px)')
+    // const breackpoint480 = useMediaQuery('(min-width:480px)')
+    // const breackpoint320 = useMediaQuery('(min-width:320px)')
+    
+
+    let mainColumnWidth = useMediaQuery('(max-width:1900px)') ? '1150px' : ''
+    mainColumnWidth = useMediaQuery('(max-width:1200px)') ? '900px' : mainColumnWidth
+    mainColumnWidth = useMediaQuery('(max-width:900px)') ? '600px' : mainColumnWidth
+    mainColumnWidth = useMediaQuery('(max-width:610px)') ? 'auto' : mainColumnWidth
+    // mainColumnWidth = useMediaQuery('(max-width:320px)') ? '800px' : mainColumnWidth
+    const isMovilWidth = useMediaQuery('(max-width:610px)')
+
     const trans = key => translate( key )
 
-    const handlerSearch = (event) => setFilterBySearch( prev => event.target.value )
+    const handlerSearch = ({ target:{value}}) => setFilterBySearch( prev => value )
 
-    const handlerFilter = (event) => setFilterByActive( prev => event.target.checked )
+    const handlerFilter = ({ target:{checked}}) => setFilterByActive( prev => checked )
 
     const filterActiveElements = item => filterByActive ? item.active : true
 
@@ -60,24 +75,24 @@ export default function Index(){
 
     return <Box sx={{ backgroundColor:'#eeeeee', height:'100vh' }}>
         <BarNav />
-        <CustomBreadcrumbs data-testid='breadcrumb' items={breadcrumbs} sx={{ width:'60%', mx:'auto', py:3 }}/>
+        <CustomBreadcrumbs data-testid='breadcrumb' items={breadcrumbs} sx={{ width:mainColumnWidth, mx:'auto', py:3 }}/>
         <TableContainer
             data-testid='table-product-list'
             component={Card}
-            sx={{ borderRadius:3, width:'60%', mx:'auto' }}
+            sx={{ borderRadius:3, width:mainColumnWidth, mx:'auto' }}
         >
             <Table size={ dense ? 'small' : 'medium' }>
                 <TableHead>
                     <HeaderControls onSearch={handlerSearch} onFilter={handlerFilter} />
-                    <TableRow sx={{ fontWeight:'bold' }}>
-                        <TableCell sx={{ width:'8%'}}>{trans('sku')}</TableCell>
-                        <TableCell sx={{ width:'52%' }}>{trans('description')}</TableCell>
-                        <TableCell sx={{ width:'8%'}}>{trans('mark')}</TableCell>
-                        <TableCell sx={{ width:'8%'}}>{trans('price')}</TableCell>
-                        <TableCell sx={{ width:'8%'}}>{trans('stok')}</TableCell>
-                        <TableCell sx={{ width:'8%'}}>{trans('active')}</TableCell>
-                        <TableCell sx={{ width:'8%'}}>{trans('options')}</TableCell>
-                    </TableRow>
+                    {!isMovilWidth && <TableRow sx={{ fontWeight:'bold' }}>
+                        <TableCell sx={{ width:`${800/mainColumnWidth}%`}}>{trans('sku')}</TableCell>
+                        <TableCell sx={{ width:`${800/mainColumnWidth}%` }}>{trans('description')}</TableCell>
+                        <TableCell sx={{ width:`${800/mainColumnWidth}%`}}>{trans('mark')}</TableCell>
+                        <TableCell sx={{ width:`${800/mainColumnWidth}%`}}>{trans('price')}</TableCell>
+                        <TableCell sx={{ width:`${800/mainColumnWidth}%`}}>{trans('stok')}</TableCell>
+                        <TableCell sx={{ width:`${800/mainColumnWidth}%`}}>{trans('active')}</TableCell>
+                        <TableCell sx={{ width:`${800/mainColumnWidth}%`}}>{trans('options')}</TableCell>
+                    </TableRow>}
                 </TableHead>
                 <TableBody data-testid='table-content'>
                     { rows.filter(filterActiveElements).filter(filterSearchInput).map( row => <ProductRow key={row.SKU} row={row}/>)}

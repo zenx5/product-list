@@ -8,7 +8,9 @@ import ptLocales from './langs/pt'
 
 import { defaultLang } from './config-lang';
 
-let lng = defaultLang.value
+const localLang = localStorage.getItem('i18nextLng') 
+
+let lng = localLang ?? defaultLang.value
 
 i18n
   .use(initReactI18next)
