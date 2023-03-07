@@ -1,25 +1,25 @@
 import {
     Box,
-    Button,
     Card,
-    FormControl,
-    FormControlLabel,
-    Switch,
     Table,
     TableBody,
     TableCell,
     TableContainer,
     TableHead,
     TableRow,
-    TextField
 } from "@mui/material";
 import { useState } from "react";
-import { CustomBreadcrumbs } from "../../../components";
+import { useTranslation } from "react-i18next";
+import { BarNav, CustomBreadcrumbs } from "../../../components";
+import HeaderControls from "./HeaderControls";
+import ProductRow from "./ProductRow";
 
 
 export default function Index(){
-    const [dense, setDense] = useState(false)
-    const [rows, setRows] = useState([
+    const [filterByActive, setFilterByActive] = useState(false)
+    const [filterBySearch, setFilterBySearch] = useState('')
+    const [dense] = useState(false)
+    const [rows] = useState([
         {
             createdAt: "2023-03-04T01:20:28.913Z",
             SKU: 91944,
@@ -27,6 +27,7 @@ export default function Index(){
             mark: "veritatis",
             price: "489.00",
             stock: 5,
+            active:true,
             id: "1"
            },
            {
@@ -36,91 +37,50 @@ export default function Index(){
             mark: "modi",
             price: "78.00",
             stock: 10,
+            active:false,
             id: "2"
            },
     ])
+    const { t:translate } = useTranslation()
+
     const breadcrumbs = [
         { href:'/', label:'Catalogo' },
         { href:'/', label:'Productos' },
     ]
 
-    const trans = key => key
+    const trans = key => translate( key )
 
-    return <Box sx={{ backgroundColor:'#f0f0f0', height:'100vh' }}>
-        <CustomBreadcrumbs items={breadcrumbs}/>
+    const handlerSearch = (event) => setFilterBySearch( prev => event.target.value )
+
+    const handlerFilter = (event) => setFilterByActive( prev => event.target.checked )
+
+    const filterActiveElements = item => filterByActive ? item.active : true
+
+    const filterSearchInput = item => item.description.includes(filterBySearch)
+
+    return <Box sx={{ backgroundColor:'#eeeeee', height:'100vh' }}>
+        <BarNav />
+        <CustomBreadcrumbs data-testid='breadcrumb' items={breadcrumbs} sx={{ width:'60%', mx:'auto', py:3 }}/>
         <TableContainer
             data-testid='table-product-list'
             component={Card}
-            sx={{ borderRadius:2, width:'80%', mx:'auto' }}
+            sx={{ borderRadius:3, width:'60%', mx:'auto' }}
         >
             <Table size={ dense ? 'small' : 'medium' }>
                 <TableHead>
-                {/* <Box
-                    sx={{
-                        display:'grid',
-                        width:'100%',
-                        m:0,
-                        p:0,
-                        border:'1px solid red'
-                    }}
-                    gap={1}
-                    gridTemplateColumns={{
-                    xs: `repeat(3, 1fr)`,
-                    sm: `minmax(3, 1fr)`,
-                    md: `minmax(3, 1fr)`,
-                    }}
-                    > */}
-                    <TableRow>
-                        <TableCell colSpan={2}>
-                            <TextField
-                                InputProps={{
-                                    startAdornment:'S'
-                                }}
-                                placeholder={trans('placeholder_search_reg')}
-                            />
-                        </TableCell>
-                        <TableCell colSpan={2}>
-                            <FormControlLabel control={<Switch />} label={trans('select_active')} labelPlacement='start' />
-                        </TableCell>
-                        <TableCell colSpan={3}>
-                            <Button variant='contained' sx={{borderRadius:10}} startIcon='+'>{trans('new_product')}</Button>
-                        </TableCell>
-                    </TableRow>
-                    {/* </Box> */}
-                    <TableRow>
-                        <TableCell>{trans('sku')}</TableCell>
-                        <TableCell>{trans('description')}</TableCell>
-                        <TableCell>{trans('mark')}</TableCell>
-                        <TableCell>{trans('price')}</TableCell>
-                        <TableCell>{trans('stok')}</TableCell>
-                        <TableCell>{trans('status')}</TableCell>
-                        <TableCell>{trans('options')}</TableCell>
+                    <HeaderControls onSearch={handlerSearch} onFilter={handlerFilter} />
+                    <TableRow sx={{ fontWeight:'bold' }}>
+                        <TableCell sx={{ width:'8%'}}>{trans('sku')}</TableCell>
+                        <TableCell sx={{ width:'52%' }}>{trans('description')}</TableCell>
+                        <TableCell sx={{ width:'8%'}}>{trans('mark')}</TableCell>
+                        <TableCell sx={{ width:'8%'}}>{trans('price')}</TableCell>
+                        <TableCell sx={{ width:'8%'}}>{trans('stok')}</TableCell>
+                        <TableCell sx={{ width:'8%'}}>{trans('active')}</TableCell>
+                        <TableCell sx={{ width:'8%'}}>{trans('options')}</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody data-testid='table-content'>
-                    { rows.map( row => <TableRow>
-                        <TableCell>
-                            { row.SKU }
-                        </TableCell>
-                        <TableCell>
-                            { row.description }
-                        </TableCell>
-                        <TableCell>
-                            { row.mark }
-                        </TableCell>
-                        <TableCell>
-                            { row.price }
-                        </TableCell>
-                        <TableCell>
-                            { row.stock }
-                        </TableCell>
-                        <TableCell>
-                            { row.status }
-                        </TableCell>
-                        <TableCell>
-                            options
-                        </TableCell>
-                    </TableRow>)}
+                    { rows.filter(filterActiveElements).filter(filterSearchInput).map( row => <ProductRow key={row.SKU} row={row}/>)}
                 </TableBody>
             </Table>
         </TableContainer>
