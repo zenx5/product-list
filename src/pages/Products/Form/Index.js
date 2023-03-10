@@ -34,15 +34,15 @@ export default function Index(){
     console.log(products, isLoading, product)
     useEffect(()=>{
         dispatch(getProduct(id))
-    },[dispatch])
+    },[id, dispatch])
 
     useEffect(() => {
         if (product) {
-            setSku( prev => sku )
-            setDescription( prev => description )
-            setBrand( prev => brand )
-            setPrice( prev => price )
-            setActive( prev => active )
+            setSku( prev => product.SKU )
+            setDescription( prev => product.description )
+            setBrand( prev => product.brand )
+            setPrice( prev => product.price )
+            setActive( prev => product.active )
         }
     }, [product])
 
@@ -87,12 +87,11 @@ export default function Index(){
         }
     }
 
-    const validateSKU = (value) => {
-        return true
-    }
+    const validateSKU = (value) => !!products?.find( item=>item.SKU===value )
 
     const handlerSave = () => {
         dispatch(setProduct({
+            id,
             sku,
             description,
             brand,

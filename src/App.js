@@ -29,6 +29,14 @@ export default function AppRoutes() {
             columnTwo={<ProductForm />}
           />
         }/>
+      <Route path='/edit/:id'
+        element={
+          <ColumnsTwo
+            xs={11.5}
+            columnOne={<SideBar />}
+            columnTwo={<ProductForm />}
+          />
+        }/>
     </Routes>
   </>
 }

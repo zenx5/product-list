@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MenuItem } from "@mui/material"
+import { Box, MenuItem, useMediaQuery } from "@mui/material"
 import { Apps, Business, Dashboard, Person, Redeem, ShoppingBasket, Store } from '@mui/icons-material';
 
 export default function SideBar({ items }) {
@@ -9,7 +9,9 @@ export default function SideBar({ items }) {
         setSelect(prev => value)
     }
 
-    return <>
+    const isMovilWidth = useMediaQuery('(max-width:610px)')
+
+    return <Box display='grid' gridTemplateColumns={isMovilWidth ? 'repeat(3, 1fr)' : 'repeat(1, 1fr)'}>
         <MenuItem onClick={handlerSelectMenu(0)}>
             <Dashboard sx={{ mx:'auto', py:1, opacity: select===0?1:0.5 }} />
         </MenuItem>
@@ -31,5 +33,5 @@ export default function SideBar({ items }) {
         <MenuItem onClick={handlerSelectMenu(6)}>
             <ShoppingBasket sx={{ mx:'auto', py:1, opacity: select===6?1:0.5 }} />
         </MenuItem>
-    </>
+    </Box>
 }

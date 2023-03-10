@@ -13,8 +13,9 @@ import {
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { BarNav, CustomBreadcrumbs } from "../../../components";
-import { getProducts } from "../../../redux/slices/product";
+import { getProducts, setProduct, deleteProduct } from "../../../redux/slices/product";
 import HeaderControls from "./HeaderControls";
 import ProductRow from "./ProductRow";
 
@@ -28,6 +29,8 @@ export default function Index(){
     const [rows, setRows] = useState([])
 
     const dispatch = useDispatch()
+
+    const navigate = useNavigate()
 
     const { products, isLoading } = useSelector((state) => state.product)
 
@@ -68,12 +71,24 @@ export default function Index(){
 
     const handlerChangePage = (event, newPage) => {
         setPage(newPage);
-    };
+    }
 
-     const handlerChangeRowsPerPage = (event) => {
+     const handlerChangeRowsPerPage = event => {
         setRowsPerPage(+event.target.value);
         setPage(0);
-    };
+    }
+
+    const handlerEdit = id => {
+        navigate(`/edit/${id}`)
+    }
+
+    const handlerDelete = id => {
+        dispatch(deleteProduct(id))
+    }
+
+    const handlerUpdateState = (row) => {
+        dispatch(setProduct({...row, active:!row.active}))
+    }
 
     return <Box sx={{ backgroundColor:'#eeeeee', height:'100vh' }}>
         <CustomBreadcrumbs data-testid='breadcrumb' items={breadcrumbs} sx={{ width:mainColumnWidth, mx:'auto', py:3 }}/>
@@ -101,7 +116,14 @@ export default function Index(){
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         .filter(filterActiveElements)
                         .filter(filterSearchInput)
-                        .map( row => <ProductRow key={row.SKU} row={row}/>)
+                        .map( row =>
+                            <ProductRow
+                                key={row.SKU}
+                                row={row}
+                                onEdit={()=>handlerEdit(row.id)}
+                                onDelete={()=>handlerDelete(row.id)}
+                                onUpdateState={()=>handlerUpdateState(row)}
+                                 />)
                     }
                 </TableBody>
             </Table>

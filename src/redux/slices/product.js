@@ -78,9 +78,25 @@ export function setProduct(data){
     return async (dispatch) => {
         dispatch(slice.actions.startLoading())
         try{
-            console.log(data)
-            const response = await ProductService.post(data)
-            console.log(response)
+            if( data.id ) {
+                await ProductService.update(data.id, data)
+            }else{
+                await ProductService.post(data)
+            }
+            dispatch(getProducts())
+            dispatch(slice.actions.setCreateProduct(data))
+        }catch( error ) {
+            dispatch(slice.actions.hasError(error))
+        }
+    }
+}
+
+export function deleteProduct(id){
+    return async (dispatch) => {
+        dispatch(slice.actions.startLoading())
+        try{
+            const response = await ProductService.delete(id)
+            dispatch(getProducts())
             dispatch(slice.actions.setCreateProduct(response))
         }catch( error ) {
             dispatch(slice.actions.hasError(error))

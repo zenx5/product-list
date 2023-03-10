@@ -3,7 +3,7 @@ import { Grid, TableRow, TableCell, IconButton, Popover, MenuItem, Divider, useM
 import { MoreVert, Check, Edit, Delete, CheckBox, CheckBoxOutlineBlank } from '@mui/icons-material'
 import { useTranslation } from 'react-i18next';
 
-export default function ProductRow({ row, renderOptions = () => {} }) {
+export default function ProductRow({ row, onEdit, onDelete, onUpdateState}) {
     const [changeStatus, setChangeStatus] = useState(false)
     const [anchorEl, setAnchorEl] = useState(null);
     const { t:translate } = useTranslation()
@@ -19,9 +19,6 @@ export default function ProductRow({ row, renderOptions = () => {} }) {
         setChangeStatus( prev => !prev )
     }
 
-    const getStatus = value => {
-        return (changeStatus && (!value)) || ((!changeStatus) && value)
-    }
 
     if( isMovilWidth ){
         return <>
@@ -52,8 +49,8 @@ export default function ProductRow({ row, renderOptions = () => {} }) {
                         }}
                     >
                         <MenuItem sx={{ backgroundColor:'#fff0', px:3 }} onClick={handlerActive}>
-                            { getStatus( active ) ? <CheckBox sx={{ pr:2 }} /> : <CheckBoxOutlineBlank sx={{ pr:2 }} /> }
-                            { getStatus( active ) ? translate('deactive') : translate('active') }
+                            { active ? <CheckBox sx={{ pr:2 }} /> : <CheckBoxOutlineBlank sx={{ pr:2 }} /> }
+                            { active ? translate('deactive') : translate('active') }
                         </MenuItem>
                         <Divider />
                         <MenuItem sx={{ backgroundColor:'#fff0', px:3 }}>
@@ -78,7 +75,7 @@ export default function ProductRow({ row, renderOptions = () => {} }) {
                     <ListItem sx={{ py:0, my:0, justifyContent:'center' }}>{ stock }</ListItem>
                 </TableCell>
                 <TableCell colSpan={1}>
-                    { getStatus( active ) ? <Check sx={{ color:"#19c969" }} /> : <CheckBoxOutlineBlank sx={{ color:'#0005' }} />  }
+                    { active ? <Check sx={{ color:"#19c969" }} /> : <CheckBoxOutlineBlank sx={{ color:'#0005' }} />  }
                 </TableCell>
             </TableRow>
         </>
@@ -101,7 +98,7 @@ export default function ProductRow({ row, renderOptions = () => {} }) {
                 { stock }
             </TableCell>
             <TableCell>
-                { getStatus( active ) && <Check sx={{ color:"#19c969" }} />  }
+                { active && <Check sx={{ color:"#19c969" }} />  }
             </TableCell>
             <TableCell>
                 <IconButton onClick={(event)=>setAnchorEl(event.currentTarget)}>
@@ -122,16 +119,16 @@ export default function ProductRow({ row, renderOptions = () => {} }) {
                         }
                     }}
                 >
-                    <MenuItem sx={{ backgroundColor:'#fff0', px:3 }} onClick={handlerActive}>
-                        { getStatus( active ) ? <CheckBox sx={{ pr:2 }} /> : <CheckBoxOutlineBlank sx={{ pr:2 }} /> }
-                        { getStatus( active ) ? translate('deactive') : translate('active') }
+                    <MenuItem sx={{ backgroundColor:'#fff0', px:3 }} onClick={onUpdateState}>
+                        {  active ? <CheckBox sx={{ pr:2 }} /> : <CheckBoxOutlineBlank sx={{ pr:2 }} /> }
+                        {  active ? translate('deactive') : translate('active') }
                     </MenuItem>
                     <Divider />
-                    <MenuItem sx={{ backgroundColor:'#fff0', px:3 }}>
+                    <MenuItem sx={{ backgroundColor:'#fff0', px:3 }} onClick={onEdit}>
                         <Edit sx={{ pr:2 }} /> {translate('edit')}
                     </MenuItem>
                     <Divider />
-                    <MenuItem sx={{ backgroundColor:'#fff0', px:3 }}>
+                    <MenuItem sx={{ backgroundColor:'#fff0', px:3 }}  onClick={onDelete}>
                         <Delete sx={{ pr:2 }} /> {translate('delete')}
                     </MenuItem>
                 </Popover>
