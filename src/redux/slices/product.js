@@ -52,8 +52,9 @@ export function getProducts(){
     return async (dispatch) => {
         dispatch(slice.actions.startLoading())
         try{
-            const response = ProductService.fetch()
-            dispatch(slice.actions.getProductsSuccess(response.data))
+            const response = await ProductService.fetch()
+            console.log(response)
+            dispatch(slice.actions.getProductsSuccess(response))
         }catch( error ) {
             dispatch(slice.actions.hasError(error))
         }
@@ -65,7 +66,8 @@ export function getProduct(id){
         dispatch(slice.actions.startLoading())
         try{
             const response = ProductService.get(id)
-            dispatch(slice.actions.getProductSuccess(response.data))
+            console.log(response)
+            dispatch(slice.actions.getProductSuccess(response))
         }catch( error ) {
             dispatch(slice.actions.hasError(error))
         }

@@ -22,43 +22,21 @@ export default function Index(){
     const [filterByActive, setFilterByActive] = useState(false)
     const [filterBySearch, setFilterBySearch] = useState('')
     const [dense] = useState(false)
-    // const [rows, setRows] = useState([])
-    const [rows] = useState([
-        {
-            createdAt: "2023-03-04T01:20:28.913Z",
-            SKU: 91944,
-            description: "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive",
-            mark: "veritatis",
-            price: "489.00",
-            stock: 5,
-            active:true,
-            id: "1"
-           },
-           {
-            createdAt: "2023-03-03T07:09:53.574Z",
-            SKU: 51429,
-            description: "The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients",
-            mark: "modi",
-            price: "78.00",
-            stock: 10,
-            active:false,
-            id: "2"
-           },
-    ])
+    const [rows, setRows] = useState([])
 
-    // const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
-    // const { products, isLoading } = useSelector((state) => state.product)
+    const { products, isLoading } = useSelector((state) => state.product)
 
-    // useEffect(()=>{
-    //     dispatch(getProducts())
-    // },[dispatch])
+    useEffect(()=>{
+        dispatch(getProducts())
+    },[dispatch])
 
-    // useEffect(() => {
-    //     if (products.length) {
-    //       setRows(products)
-    //     }
-    // }, [products])
+    useEffect(() => {
+        if (products.length) {
+          setRows(products)
+        }
+    }, [products])
 
     const { t:translate } = useTranslation()
 
