@@ -9,9 +9,11 @@ import {
     TableRow,
     useMediaQuery,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
 import { BarNav, CustomBreadcrumbs } from "../../../components";
+import { getProducts } from "../../../redux/slices/product";
 import HeaderControls from "./HeaderControls";
 import ProductRow from "./ProductRow";
 
@@ -20,6 +22,7 @@ export default function Index(){
     const [filterByActive, setFilterByActive] = useState(false)
     const [filterBySearch, setFilterBySearch] = useState('')
     const [dense] = useState(false)
+    // const [rows, setRows] = useState([])
     const [rows] = useState([
         {
             createdAt: "2023-03-04T01:20:28.913Z",
@@ -42,6 +45,21 @@ export default function Index(){
             id: "2"
            },
     ])
+
+    // const dispatch = useDispatch()
+
+    // const { products, isLoading } = useSelector((state) => state.product)
+
+    // useEffect(()=>{
+    //     dispatch(getProducts())
+    // },[dispatch])
+
+    // useEffect(() => {
+    //     if (products.length) {
+    //       setRows(products)
+    //     }
+    // }, [products])
+
     const { t:translate } = useTranslation()
 
     const breadcrumbs = [
@@ -49,20 +67,14 @@ export default function Index(){
         { href:'/', label:'Productos' },
     ]
 
-    // const breackpoint1900 = useMediaQuery('(min-width:1900px)')
-    // const breackpoint1200 = useMediaQuery('(min-width:1200px)')
-    // const breackpoint769 = useMediaQuery('(min-width:769px)')
-    // const breackpoint480 = useMediaQuery('(min-width:480px)')
-    // const breackpoint320 = useMediaQuery('(min-width:320px)')
-    
 
-    let mainColumnWidth = useMediaQuery('(max-width:1900px)') ? '1150px' : ''
+    let mainColumnWidth = useMediaQuery('(max-width:1900px)') ? '1150px' : '1150px'
     mainColumnWidth = useMediaQuery('(max-width:1200px)') ? '900px' : mainColumnWidth
     mainColumnWidth = useMediaQuery('(max-width:900px)') ? '600px' : mainColumnWidth
     mainColumnWidth = useMediaQuery('(max-width:610px)') ? 'auto' : mainColumnWidth
     // mainColumnWidth = useMediaQuery('(max-width:320px)') ? '800px' : mainColumnWidth
     const isMovilWidth = useMediaQuery('(max-width:610px)')
-
+    console.log('mainColumnWidth', mainColumnWidth)
     const trans = key => translate( key )
 
     const handlerSearch = ({ target:{value}}) => setFilterBySearch( prev => value )
@@ -74,24 +86,23 @@ export default function Index(){
     const filterSearchInput = item => item.description.includes(filterBySearch)
 
     return <Box sx={{ backgroundColor:'#eeeeee', height:'100vh' }}>
-        <BarNav />
         <CustomBreadcrumbs data-testid='breadcrumb' items={breadcrumbs} sx={{ width:mainColumnWidth, mx:'auto', py:3 }}/>
         <TableContainer
             data-testid='table-product-list'
             component={Card}
             sx={{ borderRadius:3, width:mainColumnWidth, mx:'auto' }}
         >
-            <Table size={ dense ? 'small' : 'medium' }>
-                <TableHead>
+            <Table size='medium' sx={{ width:'100%', p:0, m:0 }}>
+                <TableHead sx={{ p:0, m:0 }}>
                     <HeaderControls onSearch={handlerSearch} onFilter={handlerFilter} />
-                    {!isMovilWidth && <TableRow sx={{ fontWeight:'bold' }}>
-                        <TableCell sx={{ width:`${800/mainColumnWidth}%`}}>{trans('sku')}</TableCell>
-                        <TableCell sx={{ width:`${800/mainColumnWidth}%` }}>{trans('description')}</TableCell>
-                        <TableCell sx={{ width:`${800/mainColumnWidth}%`}}>{trans('mark')}</TableCell>
-                        <TableCell sx={{ width:`${800/mainColumnWidth}%`}}>{trans('price')}</TableCell>
-                        <TableCell sx={{ width:`${800/mainColumnWidth}%`}}>{trans('stok')}</TableCell>
-                        <TableCell sx={{ width:`${800/mainColumnWidth}%`}}>{trans('active')}</TableCell>
-                        <TableCell sx={{ width:`${800/mainColumnWidth}%`}}>{trans('options')}</TableCell>
+                    {!isMovilWidth && <TableRow sx={{ width:'100%', fontWeight:'bold' }}>
+                        <TableCell>{trans('sku')}</TableCell>
+                        <TableCell>{trans('description')}</TableCell>
+                        <TableCell>{trans('mark')}</TableCell>
+                        <TableCell>{trans('price')}</TableCell>
+                        <TableCell>{trans('stock')}</TableCell>
+                        <TableCell>{trans('active')}</TableCell>
+                        <TableCell sx={{width:'auto'}}>{trans('options')}</TableCell>
                     </TableRow>}
                 </TableHead>
                 <TableBody data-testid='table-content'>

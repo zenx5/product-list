@@ -15,12 +15,6 @@ export default function BarNav() {
 
     const open = Boolean(anchorEl)
 
-    const langs = [
-        { value:'es', label:'es' }, // <Icon><EsCircle /></Icon>
-        { value:'pt', label:'pt' }, // <Icon><PtCircle /></Icon>
-        { value:'en', label:'en' }, // <Icon><EnCircle /></Icon>
-    ]
-
     const handlerChangeLanguage = (event, newLanguage) => {
         if( newLanguage ){
             setCurrentLang(prev => newLanguage)
@@ -62,11 +56,11 @@ export default function BarNav() {
                         exclusive
                         onChange={handlerChangeLanguage}
                         >
-                        <ToggleButton value='es'>
-                            <img src={EsCircle} width={16} height={16} />
-                        </ToggleButton>
                         <ToggleButton value='pt'>
                             <img src={PtCircle} width={16} height={16} />
+                        </ToggleButton>
+                        <ToggleButton value='es'>
+                            <img src={EsCircle} width={16} height={16} />
                         </ToggleButton>
                         <ToggleButton value='en'>
                             <img src={EnCircle} width={16} height={16} />
