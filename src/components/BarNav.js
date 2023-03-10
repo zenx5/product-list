@@ -6,7 +6,8 @@ import EnCircle from '../assets/icons/en-circle.png'
 import EsCircle from '../assets/icons/es-circle.png'
 import PtCircle from '../assets/icons/pt-circle.png'
 
-export default function BarNav() {
+export default function BarNav({ onToggleMenu }) {
+    const [tag, setTag] = useState('')
     const [currentLang, setCurrentLang] = useState( localStorage.getItem('i18nextLng') ?? 'pt')
     const [anchorEl, setAnchorEl] = useState(null);
     const isMovilWidth = useMediaQuery('(max-width:610px)')
@@ -26,13 +27,13 @@ export default function BarNav() {
 
     return <Grid container sx={{ backgroundColor: 'primary.main', p:3 }} data-testid='barnav'>
         <Grid item xs={6}>
-            { !isMovilWidth && <Typography variant='h5' color='#fff' sx={{ fontWeight:'bold' }}> <IconButton><Menu sx={{ color:'#fff' }}/></IconButton> MeuErpOnline</Typography> }
-            { isMovilWidth && <IconButton><Menu sx={{ color:'#fff' }}/></IconButton> }
+            { !isMovilWidth && <Typography variant='h5' color='#fff' sx={{ fontWeight:'bold' }}> <IconButton onClick={onToggleMenu}><Menu sx={{ color:'#fff' }}/></IconButton> MeuErpOnline</Typography> }
+            { isMovilWidth && <IconButton onClick={onToggleMenu}><Menu sx={{ color:'#fff' }}/></IconButton> }
         </Grid>
         <Grid item xs={6} sx={{ display:'flex', justifyContent:'flex-end' }}>
             <ButtonBase  onClick={(event)=>setAnchorEl(event.currentTarget)}>
                 <Avatar />
-                { !isMovilWidth && <Typography sx={{ mx:2, color:'#fff', fontWeight:'bold' }}>omartinez@gmail.com</Typography> }
+                { !isMovilWidth && <Typography sx={{ mx:2, color:'#fff', fontWeight:'bold' }}>omartinez1618@gmail.com</Typography> }
                 { !isMovilWidth && <ArrowDropDown sx={{ color:'#fff' }}/> }
             </ButtonBase>
             <Popover
@@ -67,7 +68,7 @@ export default function BarNav() {
                         </ToggleButton>
                     </ToggleButtonGroup>
                 </Box>
-                <MenuItem sx={{ justifyContent:'center' }}>Logout</MenuItem>
+                <MenuItem sx={{ justifyContent:'center' }} onClick={()=>setTag('noo!')}>Logout {tag}</MenuItem>
             </Popover>
         </Grid>
     </Grid>
