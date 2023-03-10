@@ -13,7 +13,7 @@ export default function ProductRow({ row, renderOptions = () => {} }) {
 
     const open = Boolean(anchorEl)
 
-    const { SKU, description, mark, price, stock, active } = row
+    const { SKU, description, brand, price, stock, active } = row
 
     const handlerActive = () => {
         setChangeStatus( prev => !prev )
@@ -68,12 +68,12 @@ export default function ProductRow({ row, renderOptions = () => {} }) {
             </TableRow>
             <TableRow sx={{ '.MuiTableCell-root':{ borderBottomWidth:5 } }}>
                 <TableCell colSpan={2}>
-                    <ListItem sx={{ py:0, my:0, fontWeight:'bold' }}>Mark:</ListItem>
-                    <ListItem sx={{ py:0, my:0, fontWeight:'bold' }}>Price:</ListItem>
-                    <ListItem sx={{ py:0, my:0, fontWeight:'bold' }}>Stock:</ListItem>
+                    <ListItem sx={{ py:0, my:0, fontWeight:'bold' }}>{translate('brand')}:</ListItem>
+                    <ListItem sx={{ py:0, my:0, fontWeight:'bold' }}>{translate('price')}:</ListItem>
+                    <ListItem sx={{ py:0, my:0, fontWeight:'bold' }}>{translate('stock')}:</ListItem>
                 </TableCell>
                 <TableCell colSpan={4}>
-                    <ListItem sx={{ py:0, my:0, justifyContent:'center' }}>{ mark }</ListItem>
+                    <ListItem sx={{ py:0, my:0, justifyContent:'center' }}>{ brand }</ListItem>
                     <ListItem sx={{ py:0, my:0, justifyContent:'center' }}>{ price }</ListItem>
                     <ListItem sx={{ py:0, my:0, justifyContent:'center' }}>{ stock }</ListItem>
                 </TableCell>
@@ -92,7 +92,7 @@ export default function ProductRow({ row, renderOptions = () => {} }) {
                 { description }
             </TableCell>
             <TableCell>
-                { mark }
+                { brand }
             </TableCell>
             <TableCell>
                 { price }

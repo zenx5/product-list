@@ -7,6 +7,7 @@ import {
     TableContainer,
     TableHead,
     TableRow,
+    TablePagination,
     useMediaQuery,
 } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -19,6 +20,8 @@ import ProductRow from "./ProductRow";
 
 
 export default function Index(){
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
     const [filterByActive, setFilterByActive] = useState(false)
     const [filterBySearch, setFilterBySearch] = useState('')
     const [dense] = useState(false)
@@ -41,8 +44,8 @@ export default function Index(){
     const { t:translate } = useTranslation()
 
     const breadcrumbs = [
-        { href:'/', label:'Catalogo' },
-        { href:'/', label:'Productos' },
+        { href:'/', label:translate('catalog') },
+        { href:'/', label:translate('product') },
     ]
 
 
@@ -63,6 +66,15 @@ export default function Index(){
 
     const filterSearchInput = item => item.description.includes(filterBySearch)
 
+    const handlerChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+     const handlerChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
+
     return <Box sx={{ backgroundColor:'#eeeeee', height:'100vh' }}>
         <CustomBreadcrumbs data-testid='breadcrumb' items={breadcrumbs} sx={{ width:mainColumnWidth, mx:'auto', py:3 }}/>
         <TableContainer
@@ -75,8 +87,8 @@ export default function Index(){
                     <HeaderControls onSearch={handlerSearch} onFilter={handlerFilter} />
                     {!isMovilWidth && <TableRow sx={{ width:'100%', fontWeight:'bold' }}>
                         <TableCell>{trans('sku')}</TableCell>
-                        <TableCell>{trans('description')}</TableCell>
-                        <TableCell>{trans('mark')}</TableCell>
+                        <TableCell sx={{ width:'615px'}}>{trans('description')}</TableCell>
+                        <TableCell>{trans('brand')}</TableCell>
                         <TableCell>{trans('price')}</TableCell>
                         <TableCell>{trans('stock')}</TableCell>
                         <TableCell>{trans('active')}</TableCell>
@@ -84,9 +96,25 @@ export default function Index(){
                     </TableRow>}
                 </TableHead>
                 <TableBody data-testid='table-content'>
-                    { rows.filter(filterActiveElements).filter(filterSearchInput).map( row => <ProductRow key={row.SKU} row={row}/>)}
+                    {
+                        rows
+                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                        .filter(filterActiveElements)
+                        .filter(filterSearchInput)
+                        .map( row => <ProductRow key={row.SKU} row={row}/>)
+                    }
                 </TableBody>
             </Table>
+            <TablePagination
+                rowsPerPageOptions={[5, 10, 15]}
+                sx={{ width:mainColumnWidth, mx:'auto', py:3 }}
+                component="div"
+                count={rows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handlerChangePage}
+                onRowsPerPageChange={handlerChangeRowsPerPage}
+            />
         </TableContainer>
     </Box>
 }

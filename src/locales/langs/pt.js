@@ -5,14 +5,19 @@ const pt = {
     placeholder_search_reg: 'Buscar registro',
     sku:'SKU',
     description:'Descrição',
-    mark:'Marca',
+    brand:'Marca',
     price:'Preço',
     stock:'Estoque',
     active:'Ativo',
     deactive:'Desativo',
     options:'Opções',
     edit: 'Editar',
-    delete: 'Excluir'
-
+    delete: 'Excluir',
+    save:'Guardar',
+    sku_used: 'Sku usado',
+    catalogue:'Catálogo',
+    product:'Productos',
+    new:'Novo',
+    back:'Voltar'
 }
 export default pt;

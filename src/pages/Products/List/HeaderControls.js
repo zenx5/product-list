@@ -12,6 +12,7 @@ import { Search, Add } from "@mui/icons-material"
 import { useTranslation } from "react-i18next"
 import { useState } from "react"
 import { fontSize, padding } from "@mui/system"
+import { NavLink } from "react-router-dom"
 
 export default function HeaderControls({ onSearch, onFilter }){
     const [activeMovilSearch, setActiveMovilSearch] = useState(false)
@@ -68,8 +69,8 @@ export default function HeaderControls({ onSearch, onFilter }){
                 <FormControlLabel control={<Switch onChange={onFilter} />} label={translate('select_active')} labelPlacement='start' />
             </TableCell>
             <TableCell colSpan={isTableWidth ? 1 : 2}>
-                { !isTableWidth && <Button variant='contained' sx={{ borderRadius:10, width:'120%', left:'-20%', fontWeight:'bold' }} startIcon={<Add sx={{ px:0 }}/>}>{translate('new_product')}</Button> }
-                { isTableWidth && <IconButton sx={{ backgroundColor: 'primary.main', color:'#fff' }}><Add /></IconButton> }
+                { !isTableWidth && <Button component={NavLink} to='/new' variant='contained' sx={{ borderRadius:10, width:'190px', left:'-40px', fontWeight:'bold' }} startIcon={<Add sx={{ px:0 }}/>}>{translate('new_product')}</Button> }
+                { isTableWidth && <IconButton component={NavLink} to='/new' sx={{ backgroundColor: 'primary.main', color:'#fff' }}><Add /></IconButton> }
             </TableCell>
         </TableRow>
         { ( isMovilWidth && activeMovilSearch) && <TableRow>

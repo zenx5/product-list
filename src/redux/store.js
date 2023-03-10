@@ -8,9 +8,12 @@ import productReducer from './slices/product';
 
 // ----------------------------------------------------------------------
 
-const rootReducer = combineReducers({
-    product: productReducer
-});
+export const productPersistConfig = {
+  key: 'product',
+  storage,
+  keyPrefix: 'redux-',
+  whitelist: ['product', 'products', 'createProduct'],
+};
 
 const rootPersistConfig = {
     key: 'root',
@@ -18,6 +21,10 @@ const rootPersistConfig = {
     keyPrefix: 'redux-',
     whitelist: [],
 };
+
+const rootReducer = combineReducers({
+  product: persistReducer(productPersistConfig, productReducer)
+});
 
 const store = configureStore({
   reducer: persistReducer(rootPersistConfig, rootReducer),

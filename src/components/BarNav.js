@@ -5,6 +5,7 @@ import { ArrowDropDown, Menu } from '@mui/icons-material'
 import EnCircle from '../assets/icons/en-circle.png'
 import EsCircle from '../assets/icons/es-circle.png'
 import PtCircle from '../assets/icons/pt-circle.png'
+import { NavLink } from 'react-router-dom';
 
 export default function BarNav() {
     const [currentLang, setCurrentLang] = useState( localStorage.getItem('i18nextLng') ?? 'pt')
@@ -32,7 +33,7 @@ export default function BarNav() {
         <Grid item xs={6} sx={{ display:'flex', justifyContent:'flex-end' }}>
             <ButtonBase  onClick={(event)=>setAnchorEl(event.currentTarget)}>
                 <Avatar />
-                { !isMovilWidth && <Typography sx={{ mx:2, color:'#fff', fontWeight:'bold' }}>omartinez@gmail.com</Typography> }
+                { !isMovilWidth && <Typography sx={{ mx:2, color:'#fff', fontWeight:'bold' }}>omartinez1618@gmail.com</Typography> }
                 { !isMovilWidth && <ArrowDropDown sx={{ color:'#fff' }}/> }
             </ButtonBase>
             <Popover
