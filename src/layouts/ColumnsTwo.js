@@ -1,12 +1,14 @@
 import { Grid } from "@mui/material";
+import { BarNav } from "../components";
 
 export default function ColumnsTwo({ columnOne, columnTwo, xs = 8 }){
 
     return <Grid container>
-        <Grid xs={ 12 - xs }>
+        <BarNav />
+        <Grid item xs={ 12 - xs }>
             { columnOne }
         </Grid>
-        <Grid xs={ xs }>
+        <Grid item xs={ xs }>
             { columnTwo }
         </Grid>
     </Grid>
