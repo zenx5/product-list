@@ -13,7 +13,7 @@ export default function AppRoutes() {
 
   return <>
     <Routes>
-      <Route path='/'
+      <Route path='/test-visual-software/'
         element={
           <ColumnsTwo
             xs={11.5}
@@ -21,7 +21,7 @@ export default function AppRoutes() {
             columnTwo={<ProductList />}
           />
         }/>
-      <Route path='/new'
+      <Route path='/test-visual-software/new'
         element={
           <ColumnsTwo
             xs={11.5}
@@ -29,7 +29,7 @@ export default function AppRoutes() {
             columnTwo={<ProductForm />}
           />
         }/>
-      <Route path='/edit/:id'
+      <Route path='/test-visual-software/edit/:id'
         element={
           <ColumnsTwo
             xs={11.5}

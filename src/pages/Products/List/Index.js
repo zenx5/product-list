@@ -47,8 +47,8 @@ export default function Index(){
     const { t:translate } = useTranslation()
 
     const breadcrumbs = [
-        { href:'/', label:translate('catalog') },
-        { href:'/', label:translate('product') },
+        { href:'/test-visual-software', label:translate('catalog') },
+        { href:'/test-visual-software', label:translate('product') },
     ]
 
 
@@ -79,7 +79,7 @@ export default function Index(){
     }
 
     const handlerEdit = id => {
-        navigate(`/edit/${id}`)
+        navigate(`/test-visual-software/edit/${id}`)
     }
 
     const handlerDelete = id => {
