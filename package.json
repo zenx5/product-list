@@ -1,7 +1,7 @@
 {
   "name": "app-visual-software",
   "version": "0.1.0",
-  "homepage": "https://zenx5.github.io/test-visual-software/",
+  "homepage": "https://zenx5.github.io/product-list/",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.6",
