@@ -69,8 +69,8 @@ export default function HeaderControls({ onSearch, onFilter }){
                 <FormControlLabel control={<Switch onChange={onFilter} />} label={translate('select_active')} labelPlacement='start' />
             </TableCell>
             <TableCell colSpan={isTableWidth ? 1 : 2}>
-                { !isTableWidth && <Button component={NavLink} to='/test-visual-software/new' variant='contained' sx={{ borderRadius:10, width:'190px', left:'-40px', fontWeight:'bold' }} startIcon={<Add sx={{ px:0 }}/>}>{translate('new_product')}</Button> }
-                { isTableWidth && <IconButton component={NavLink} to='/test-visual-software/new' sx={{ backgroundColor: 'primary.main', color:'#fff' }}><Add /></IconButton> }
+                { !isTableWidth && <Button component={NavLink} to='/product-list/new' variant='contained' sx={{ borderRadius:10, width:'190px', left:'-40px', fontWeight:'bold' }} startIcon={<Add sx={{ px:0 }}/>}>{translate('new_product')}</Button> }
+                { isTableWidth && <IconButton component={NavLink} to='/product-list/new' sx={{ backgroundColor: 'primary.main', color:'#fff' }}><Add /></IconButton> }
             </TableCell>
         </TableRow>
         { ( isMovilWidth && activeMovilSearch) && <TableRow>

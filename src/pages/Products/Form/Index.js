@@ -49,9 +49,9 @@ export default function Index(){
     const { t:translate } = useTranslation()
 
     const breadcrumbs = [
-        { href:'/test-visual-software', label:translate('catalog') },
-        { href:'/test-visual-software', label:translate('product') },
-        { href:'/test-visual-software', label:translate('new') },
+        { href:'/product-list', label:translate('catalog') },
+        { href:'/product-list', label:translate('product') },
+        { href:'/product-list', label:translate('new') },
     ]
 
 
@@ -142,7 +142,7 @@ export default function Index(){
                     labelPlacement='end' />
             </Stack>
             <Button variant='contained' sx={{ mx:2 }} onClick={handlerSave}>{translate('save')}</Button>
-            <Button variant='outlined' component={NavLink} to='/test-visual-software' >{translate('back')}</Button>
+            <Button variant='outlined' component={NavLink} to='/product-list' >{translate('back')}</Button>
         </Card>
     </Box>
 }
